@@ -176,6 +176,7 @@ function addFellaVideo() {
   video.src = "assets/mp4s/almos_boogie.mp4";
   video.loop = true;
   video.muted = true;
+  video.setAttribute('playsinline', '');
   video.play();
 
   const videoTexture = new THREE.VideoTexture(video);
