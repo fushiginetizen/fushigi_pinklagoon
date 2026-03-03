@@ -56,7 +56,7 @@ let waterShader; // Stores shader reference directly (no per-frame traverse)
 
 const loader = new GLTFLoader();
 loader.load(
-  '../assets/models/splash.glb',
+  'assets/models/splash.glb',
   (gltf) => {
     model = gltf.scene;
     scene.add(model);
@@ -173,7 +173,7 @@ function addFellaVideo() {
   /* ========================= */
 
   const video = document.createElement('video');
-  video.src = "../assets/mp4s/almos_boogie.mp4";
+  video.src = "assets/mp4s/almos_boogie.mp4";
   video.loop = true;
   video.muted = true;
   video.play();
