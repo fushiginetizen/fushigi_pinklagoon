@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Eidophusikon RPG</title>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                background-color: #222;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+
+            #game-stage {
+                width: 1280px;
+                height: 720px;
+                border: 2px solid #555;
+                background-color: #333; /* Darker background for atmosphere */
+                transform-origin: center center;
+                position: relative;
+                box-shadow: 0 0 20px black;
+            }
+
+            /* --- UI LAYER (New) --- */
+            #ui-layer {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 150px;
+                background: rgba(0,0,0,0.8);
+                border-top: 4px solid #555;
+                color: white;
+                font-family: monospace;
+                padding: 20px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                pointer-events: none; /* Let clicks pass through if we aren't clicking text */
+            }
+
+            #message-text {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            #choices-area button {
+                pointer-events: auto; /* Re-enable clicks for buttons */
+                font-size: 20px;
+                padding: 10px 20px;
+                background: #444;
+                color: gold;
+                border: 2px solid gold;
+                cursor: pointer;
+                margin-right: 10px;
+            }
+            
+            #choices-area.hidden { display: none; }
+        </style>
+    </head>
+
+    <body>
+    
+        <div id="game-stage">
+            <!-- Entities will be spawned here by JS -->
+            
+            <!-- The Interface Overlay -->
+            <div id="ui-layer">
+                <div id="message-text">Welcome, traveler. Click the blue squares.</div>
+                <div id="choices-area" class="hidden">
+                    <button onclick="makeChoice('buy')">Buy Item</button>
+                    <button onclick="makeChoice('leave')">Leave</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // --- RESIZING LOGIC (unchanged) ---
+            (function(){
+                const V_W = 1280, V_H = 720;
+                const stage = document.getElementById('game-stage');
+
+                function resizeStage(){
+                    const scale = Math.min(window.innerWidth / V_W, window.innerHeight / V_H);
+                    stage.style.transform = `scale(${scale})`;
+                }
+                
+                // Keep the mouse coordinates logic
+                function getGameCoords(evt){
+                    const rect = stage.getBoundingClientRect();
+                    return {
+                        x: (evt.clientX - rect.left) * (V_W / rect.width),
+                        y: (evt.clientY - rect.top)  * (V_H / rect.height)
+                    };
+                }
+
+                window.addEventListener('resize', resizeStage);
+                resizeStage();
+                window.gameViewport = { V_W, V_H, stage, getGameCoords };
+            })();
+        </script>
+
+        <script src="eidophusikon.js"></script>
+
+    </body>
+</html>
